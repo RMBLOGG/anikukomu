@@ -1,0 +1,43 @@
+name: Build AnikuKomu APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '9.3.1'
+
+      - name: Create .env file
+        run: |
+          echo "SUPABASE_URL=https://sfyyljfpnutskeenlysb.supabase.co" > .env
+          echo "SUPABASE_KEY=sb_publishable_hCyajVO9ZXZEnsoXK2L_eA_RTg7K6K-" >> .env
+          echo "CLOUDINARY_CLOUD_NAME=dzfkklsza" >> .env
+          echo "CLOUDINARY_API_KEY=588474134734416" >> .env
+          echo "CLOUDINARY_UPLOAD_PRESET=anikukomu_uploads" >> .env
+
+      - name: Build Debug APK
+        run: gradle assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AnikuKomu-debug
+          path: app/build/outputs/apk/debug/*.apk
+          retention-days: 7

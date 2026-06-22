@@ -1,0 +1,6 @@
+{
+  "name": "AnikuKomu",
+  "description": "A dark, immersive social media platform for the anime community to share moments, stories, follow each other, and tag favorite anime.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
