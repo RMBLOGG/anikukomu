@@ -100,6 +100,8 @@ dependencies {
   implementation(libs.supabase.storage.kt)
   implementation(libs.supabase.realtime.kt)
   implementation(libs.ktor.client.android)
+  implementation(libs.ktor.client.content.negotiation)
+  implementation(libs.ktor.serialization.kotlinx.json)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.androidx.compose.ui.text.google.fonts)
   implementation(libs.converter.moshi)
