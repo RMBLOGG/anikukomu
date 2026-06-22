@@ -99,7 +99,7 @@ dependencies {
   implementation(libs.supabase.auth.kt)
   implementation(libs.supabase.storage.kt)
   implementation(libs.supabase.realtime.kt)
-  implementation(libs.ktor.client.android)
+  implementation(libs.ktor.client.okhttp)
   implementation(libs.ktor.client.content.negotiation)
   implementation(libs.ktor.serialization.kotlinx.json)
   implementation(libs.kotlinx.serialization.json)
