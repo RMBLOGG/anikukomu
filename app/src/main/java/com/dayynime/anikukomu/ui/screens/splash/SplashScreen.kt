@@ -68,7 +68,7 @@ fun SplashScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Wibu Social Haven",
+                    text = "Wibu Social Haven 🌸",
                     style = AnikuTypography.headlineMedium,
                     color = AnikuPink.copy(alpha = 0.8f)
                 )
