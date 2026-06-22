@@ -9,7 +9,7 @@ plugins {
 
 android {
   namespace = "com.dayynime.anikukomu"
-  compileSdk = 34
+  compileSdk = 36
 
   defaultConfig {
     applicationId = "com.dayynime.anikukomu"
