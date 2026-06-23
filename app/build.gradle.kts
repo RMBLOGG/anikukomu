@@ -60,6 +60,13 @@ secrets {
   defaultPropertiesFileName = ".env.example"
 }
 
+configurations.all {
+  resolutionStrategy {
+    force("androidx.core:core:1.13.1")
+    force("androidx.core:core-ktx:1.13.1")
+  }
+}
+
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.firebase.bom))
