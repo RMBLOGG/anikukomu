@@ -1,12 +1,16 @@
 package com.dayynime.anikukomu.data.repository
 
+import android.util.Log
 import com.dayynime.anikukomu.core.supabase
 import com.dayynime.anikukomu.data.model.Profile
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.github.jan.supabase.gotrue.auth
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
+private const val TAG = "AuthRepository"
 
 object AuthRepository {
 
@@ -17,8 +21,10 @@ object AuthRepository {
                 password = passwordInput
             }
             supabase.auth.currentSessionOrNull() != null
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (e: Throwable) {
+            Log.e(TAG, "login() failed: ${e.javaClass.name}: ${e.message}", e)
+            FirebaseCrashlytics.getInstance().log("login() failed: ${e.javaClass.name}: ${e.message}")
+            FirebaseCrashlytics.getInstance().recordException(e)
             false
         }
     }
@@ -44,25 +50,42 @@ object AuthRepository {
             } else {
                 false
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (e: Throwable) {
+            Log.e(TAG, "register() failed: ${e.javaClass.name}: ${e.message}", e)
+            FirebaseCrashlytics.getInstance().log("register() failed: ${e.javaClass.name}: ${e.message}")
+            FirebaseCrashlytics.getInstance().recordException(e)
             false
         }
     }
 
     fun isSessionActive(): Boolean {
-        return supabase.auth.currentSessionOrNull() != null
+        return try {
+            supabase.auth.currentSessionOrNull() != null
+        } catch (e: Throwable) {
+            Log.e(TAG, "isSessionActive() failed: ${e.javaClass.name}: ${e.message}", e)
+            FirebaseCrashlytics.getInstance().log("isSessionActive() failed: ${e.javaClass.name}: ${e.message}")
+            FirebaseCrashlytics.getInstance().recordException(e)
+            false
+        }
     }
 
     fun getCurrentUserId(): String? {
-        return supabase.auth.currentUserOrNull()?.id
+        return try {
+            supabase.auth.currentUserOrNull()?.id
+        } catch (e: Throwable) {
+            Log.e(TAG, "getCurrentUserId() failed: ${e.javaClass.name}: ${e.message}", e)
+            FirebaseCrashlytics.getInstance().log("getCurrentUserId() failed: ${e.javaClass.name}: ${e.message}")
+            FirebaseCrashlytics.getInstance().recordException(e)
+            null
+        }
     }
 
     suspend fun logout() = withContext(Dispatchers.IO) {
         try {
             supabase.auth.signOut()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (e: Throwable) {
+            Log.e(TAG, "logout() failed: ${e.javaClass.name}: ${e.message}", e)
+            FirebaseCrashlytics.getInstance().recordException(e)
         }
     }
 }

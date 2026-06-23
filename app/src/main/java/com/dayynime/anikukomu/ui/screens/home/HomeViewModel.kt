@@ -63,11 +63,13 @@ class HomeViewModel : ViewModel() {
                         likedPostIds = likedIds
                     )
                 }
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
+                com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().log("HomeViewModel.loadContent() failed: ${e.javaClass.name}: ${e.message}")
+                com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(e)
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = "Gagal memuat beranda: ${e.localizedMessage}"
+                        errorMessage = "Gagal memuat beranda: ${e.javaClass.simpleName}: ${e.message}"
                     )
                 }
             }

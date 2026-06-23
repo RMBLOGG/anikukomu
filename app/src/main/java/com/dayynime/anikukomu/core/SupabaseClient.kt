@@ -27,8 +27,9 @@ val supabase by lazy {
             install(Storage)
             install(Realtime)
         }
-    } catch (e: Exception) {
-        Log.e(TAG, "Failed to initialize Supabase client", e)
+    } catch (e: Throwable) {
+        Log.e(TAG, "Failed to initialize Supabase client: ${e.javaClass.name}: ${e.message}", e)
+        FirebaseCrashlytics.getInstance().log("Failed to initialize Supabase client: ${e.javaClass.name}: ${e.message}")
         FirebaseCrashlytics.getInstance().recordException(e)
         throw e
     }
