@@ -57,34 +57,32 @@ android {
   testOptions { unitTests { isIncludeAndroidResources = true } }
 }
 
-// Configure the Secrets Gradle Plugin to use .env and .env.example files
-// to match the convention used in Web projects.
 secrets {
   propertiesFileName = ".env"
   defaultPropertiesFileName = ".env.example"
 }
 
-// Some unused dependencies are commented out below instead of being removed.
-// This makes it easy to add them back in the future if needed.
+configurations.all {
+  resolutionStrategy {
+    force("io.ktor:ktor-client-core:3.1.3")
+    force("io.ktor:ktor-client-okhttp:3.1.3")
+    force("io.ktor:ktor-client-content-negotiation:3.1.3")
+    force("io.ktor:ktor-serialization-kotlinx-json:3.1.3")
+  }
+}
+
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.firebase.bom))
   implementation(libs.firebase.crashlytics)
   implementation(libs.firebase.analytics)
-  // implementation(libs.accompanist.permissions)
   implementation(libs.androidx.activity.compose)
-  // implementation(libs.androidx.camera.camera2)
-  // implementation(libs.androidx.camera.core)
-  // implementation(libs.androidx.camera.lifecycle)
-  // implementation(libs.androidx.camera.view)
   implementation(libs.androidx.compose.material.icons.core)
-  // implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.tooling.preview)
   implementation(libs.androidx.core.ktx)
-  // implementation(libs.androidx.datastore.preferences)
   implementation(libs.androidx.lifecycle.runtime.compose)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -93,15 +91,17 @@ dependencies {
   implementation(libs.androidx.room.runtime)
   implementation(libs.coil.compose)
 
-  // Supabase & Ktor
-  implementation(platform(libs.supabase.bom))
+  // Supabase tanpa BOM - versi manual supaya tidak di-override
   implementation(libs.supabase.postgrest.kt)
   implementation(libs.supabase.auth.kt)
   implementation(libs.supabase.storage.kt)
   implementation(libs.supabase.realtime.kt)
+
+  // Ktor 3.x eksplisit
   implementation(libs.ktor.client.okhttp)
   implementation(libs.ktor.client.content.negotiation)
   implementation(libs.ktor.serialization.kotlinx.json)
+
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.androidx.compose.ui.text.google.fonts)
   implementation(libs.converter.moshi)
@@ -111,7 +111,6 @@ dependencies {
   implementation(libs.logging.interceptor)
   implementation(libs.moshi.kotlin)
   implementation(libs.okhttp)
-  // implementation(libs.play.services.location)
   implementation(libs.retrofit)
   testImplementation(libs.androidx.compose.ui.test.junit4)
   testImplementation(libs.androidx.core)
