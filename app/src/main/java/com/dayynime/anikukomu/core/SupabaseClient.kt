@@ -11,7 +11,6 @@ import io.github.jan.supabase.realtime.Realtime
 import io.github.jan.supabase.realtime.realtime
 import io.github.jan.supabase.storage.Storage
 import io.github.jan.supabase.storage.storage
-import io.ktor.client.engine.okhttp.OkHttp
 
 private const val TAG = "SupabaseClient"
 
@@ -21,7 +20,6 @@ val supabase by lazy {
             supabaseUrl = Constants.SUPABASE_URL,
             supabaseKey = Constants.SUPABASE_KEY
         ) {
-            httpEngine = OkHttp.create()
             install(Auth) {
                 alwaysAutoRefresh = true
             }

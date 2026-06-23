@@ -41,9 +41,6 @@ android {
       signingConfig = signingConfigs.getByName("release")
     }
     debug {
-      // No custom signingConfig here: AGP auto-generates and uses the
-      // default ~/.android/debug.keystore, which always exists (even in CI),
-      // so debug builds never fail due to a missing keystore file.
     }
   }
   compileOptions {
@@ -60,15 +57,6 @@ android {
 secrets {
   propertiesFileName = ".env"
   defaultPropertiesFileName = ".env.example"
-}
-
-configurations.all {
-  resolutionStrategy {
-    force("io.ktor:ktor-client-core:3.1.3")
-    force("io.ktor:ktor-client-okhttp:3.1.3")
-    force("io.ktor:ktor-client-content-negotiation:3.1.3")
-    force("io.ktor:ktor-serialization-kotlinx-json:3.1.3")
-  }
 }
 
 dependencies {
@@ -91,14 +79,13 @@ dependencies {
   implementation(libs.androidx.room.runtime)
   implementation(libs.coil.compose)
 
-  // Supabase tanpa BOM - versi manual supaya tidak di-override
+  // Supabase & Ktor
+  implementation(platform(libs.supabase.bom))
   implementation(libs.supabase.postgrest.kt)
   implementation(libs.supabase.auth.kt)
   implementation(libs.supabase.storage.kt)
   implementation(libs.supabase.realtime.kt)
-
-  // Ktor 3.x eksplisit
-  implementation(libs.ktor.client.okhttp)
+  implementation(libs.ktor.client.android)
   implementation(libs.ktor.client.content.negotiation)
   implementation(libs.ktor.serialization.kotlinx.json)
 

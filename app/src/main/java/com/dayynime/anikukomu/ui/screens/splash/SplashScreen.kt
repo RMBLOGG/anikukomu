@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dayynime.anikukomu.data.repository.AuthRepository
 import com.dayynime.anikukomu.ui.components.LoadingIndicator
 import com.dayynime.anikukomu.ui.theme.AnikuBackground
 import com.dayynime.anikukomu.ui.theme.AnikuPink
@@ -38,12 +37,8 @@ fun SplashScreen(
 
     LaunchedEffect(Unit) {
         visible = true
-        delay(1500) // Beautiful splash time
-        if (AuthRepository.isSessionActive()) {
-            onNavigateToHome()
-        } else {
-            onNavigateToLogin()
-        }
+        delay(1500)
+        onNavigateToLogin() // skip session check dulu untuk test
     }
 
     Column(
