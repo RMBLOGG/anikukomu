@@ -34,7 +34,7 @@ jobs:
           echo "CLOUDINARY_UPLOAD_PRESET=anikukomu_uploads" >> .env
 
       - name: Build Debug APK
-        run: gradle assembleDebug --no-daemon
+        run: gradle assembleDebug --no-daemon --no-configuration-cache
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

@@ -2,8 +2,8 @@ package com.dayynime.anikukomu.data.repository
 
 import com.dayynime.anikukomu.core.supabase
 import com.dayynime.anikukomu.data.model.Profile
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.auth.providers.builtin.Email
+import io.github.jan.supabase.gotrue.auth
+import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
